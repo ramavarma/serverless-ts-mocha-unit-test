@@ -1,0 +1,30 @@
+service:
+  name: serverless-unit-test
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-mocha-plugin
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+functions:
+  hello:
+    handler: src/controller.hello
+    events:
+      - http:
+          path: /hello
+          method: post
+          cors: true
+          private: true
+  localizedHello:
+    handler: src/controller.hello
+    events:
+      - http:
+          path: /hello
+          method: post
+          cors: true
+          private: true
+
+      
