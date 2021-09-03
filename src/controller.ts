@@ -90,6 +90,32 @@ export const addUser = async (req: APIGatewayEvent, context: Context, cb: Callba
 }
 
 
+export const getUser = async (req: APIGatewayEvent, context: Context, cb: Callback) => {
+    // console.log(req.body);
+    const response = {
+        statusCode: 504,
+        body: JSON.stringify({
+            message: ``,
+        }),
+    };
+    await userService.read({}, 'user').then((values: Array<User>) => {
+        console.log(`Success`);
+        response.statusCode = 200;
+        response.body = JSON.stringify({
+            message: JSON.stringify(values),
+        });
+    }).catch(error => {
+        console.error(`Failed insertion`);
+        response.statusCode = 500;
+        response.body = JSON.stringify({
+            message: JSON.stringify(error),
+        });
+    });
+    console.log(response.statusCode)
+    cb(null, response);
+}
+
+
 
 
 

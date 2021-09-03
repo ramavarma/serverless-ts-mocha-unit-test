@@ -38,4 +38,29 @@ export class UserService {
         });
     }
 
+    public read(query: any, collection: string): Promise<Array<User>> {
+        return new Promise<Array<User>>((resolve, reject) => {
+            MongoClient.connect(this.DB_URL).then((client: MongoClient) => {
+                client.db(this.DB_NAME).collection(collection).find(query).toArray().then((values: Array<User>) => {
+                    if (values) {
+                        console.log(JSON.stringify(values));
+                        resolve(values);
+                    } else {
+                        console.error(`Undefined Result`);
+                        reject(`Undefined Result`);
+                    }
+                }).catch(error => {
+                    console.error(error);
+                    reject(error);
+                }).finally(() => {
+                    client.close();
+                });
+                
+            }).catch(error => {
+                console.error(error);
+                reject(error);
+            });
+        });
+    }
+
 }
