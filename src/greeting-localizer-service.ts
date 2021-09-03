@@ -1,6 +1,6 @@
 export class GreetingLocalizerService {
     constructor() {
-        console.log(`Hello world`);
+        // console.log(`Hello world`);
     }
 
     

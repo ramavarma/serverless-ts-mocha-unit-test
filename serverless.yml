@@ -19,10 +19,18 @@ functions:
           cors: true
           private: true
   localizedHello:
-    handler: src/controller.hello
+    handler: src/controller.localizedHello
     events:
       - http:
-          path: /hello
+          path: /localizedHello
+          method: post
+          cors: true
+          private: true
+  addUser:
+    handler: src/controller.addUser
+    events:
+      - http:
+          path: /addUser
           method: post
           cors: true
           private: true
