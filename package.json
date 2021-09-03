@@ -44,6 +44,8 @@
     "webpack": "^5.51.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.978.0"
+    "@types/mongodb": "^4.0.7",
+    "aws-sdk": "^2.978.0",
+    "mongodb": "^4.1.1"
   }
 }
