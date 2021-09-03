@@ -51,7 +51,7 @@ export const localizedHello: APIGatewayProxyHandler = (req: APIGatewayEvent, con
 
 
 export const addUser: APIGatewayProxyHandler = (req: APIGatewayEvent, context: Context, cb: Callback) => {
-    console.log(req.body);
+    // console.log(req.body);
     const response = {
         statusCode: 504,
         body: JSON.stringify({
