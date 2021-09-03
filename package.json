@@ -46,6 +46,7 @@
   "dependencies": {
     "@types/mongodb": "^4.0.7",
     "aws-sdk": "^2.978.0",
-    "mongodb": "^4.1.1"
+    "mongodb": "^4.1.1",
+    "mongodb-client-encryption": "^1.2.6"
   }
 }

@@ -9,6 +9,11 @@ provider:
   name: aws
   runtime: nodejs12.x
 
+environment:
+  MONGO_DB_URL: ${file(./serverless.env.${opt:stage}.yml):db.url}
+  MONGO_DB_DB_NAME: ${file(./serverless.env.${opt:stage}.yml):db.name}
+
+
 functions:
   hello:
     handler: src/controller.hello

@@ -1,11 +1,14 @@
 import { APIGatewayEvent, APIGatewayProxyHandler, Callback } from "aws-lambda";
+import { ObjectId } from "bson";
 import { Context } from "vm";
 import { GreetingLocalizerService } from "./greeting-localizer-service";
 import { User } from "./user";
+import { UserService } from "./user-service";
 
 
 
 const service: GreetingLocalizerService = new GreetingLocalizerService();
+const userService: UserService = new UserService();
 
 export const hello: APIGatewayProxyHandler = (req: APIGatewayEvent, context: Context, cb: Callback) => {
     const response = {
@@ -50,7 +53,7 @@ export const localizedHello: APIGatewayProxyHandler = (req: APIGatewayEvent, con
 }
 
 
-export const addUser: APIGatewayProxyHandler = (req: APIGatewayEvent, context: Context, cb: Callback) => {
+export const addUser = async (req: APIGatewayEvent, context: Context, cb: Callback) => {
     // console.log(req.body);
     const response = {
         statusCode: 504,
@@ -68,11 +71,19 @@ export const addUser: APIGatewayProxyHandler = (req: APIGatewayEvent, context: C
         response.body = JSON.stringify(error);
     } else {
         const user: User = JSON.parse(JSON.stringify(req.body)) ;
-        response.statusCode = 200;
-        response.body = JSON.stringify({
-            message: JSON.stringify(user),
+        await userService.write(user).then((value: ObjectId) => {
+            console.log(`Success`);
+            response.statusCode = 200;
+            response.body = JSON.stringify({
+                message: JSON.stringify(value),
+            });
+        }).catch(error => {
+            console.error(`Failed insertion`);
+            response.statusCode = 500;
+            response.body = JSON.stringify({
+                message: JSON.stringify(error),
+            });
         });
-
     }
     console.log(response.statusCode)
     cb(null, response);
