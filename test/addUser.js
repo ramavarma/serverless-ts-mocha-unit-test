@@ -22,4 +22,10 @@ describe('addUser', () => {
     const response = await wrapped.run({});
     expect(response.statusCode).to.equal(400);
   });
+
+  it('Should return INTERNAL SERVER ERROR for Invalid User', async () => {
+    const invalidUser = require(`../test-data/invalid-user.json`);
+    const response = await wrapped.run({invalidUser});
+    expect(response.statusCode).to.equal(500);
+  });
 });

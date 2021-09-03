@@ -15,6 +15,10 @@ export class UserService {
 
     public write(record: User): Promise<ObjectId> {
         return new Promise<ObjectId>((resolve, reject) => {
+            if(!record.emailAddress) {
+                console.error(`Invalid Record!!! Not all fields are provided`)
+                reject(`Invalid Record!!! Not all fields are provided`);
+            }
             MongoClient.connect(this.DB_URL).then((client: MongoClient) => {
                 client.db(this.DB_NAME).collection('user').insertOne(record).then((value: InsertOneResult) => {
                     if (value) {
